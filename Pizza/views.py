@@ -10,16 +10,16 @@ def index(request):
     data["ing"] = ingredient
 
     data["mass"] = Mass.objects.all()
-    for i in data["mass"]:
-    	print(i.image)
+ 
 
     if request.POST:
     	print(request.POST["diccionario"])
+    	return JsonResponse({})
     return render(request, template_name, data)
 
 def add_pizza(request):
 	data = {}
 	template_name = 'indexs.html'
-	print("aqui")
+	
 	print(request.POST["diccionario"])
 	return render(request, template_name, data)

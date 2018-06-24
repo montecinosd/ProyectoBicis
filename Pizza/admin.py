@@ -14,7 +14,7 @@ class IngredientsAdmin(admin.ModelAdmin):
 
 @admin.register(Client)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('name','birthday','email','direction','rut',)
+    list_display = ('name','birthday','email','directions','rut',)
 
     def thumb(self, obj):
         return mark_safe(u'<img src="%s" style="width:10px;height:10px;"/>' \
