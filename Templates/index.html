@@ -1,0 +1,113 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+
+
+    <title>Bienvenido</title>
+  </head>
+  <style>
+    .top {
+      background-color: #A52A2A; 
+      padding-top: 80px;
+    }
+    .container{
+      padding-top: 5px;
+      
+    }
+    .separation {
+
+      background-color: #A52A2A;
+      text-align: center;
+    }
+  </style>
+<!--                                  -->
+
+  <body>
+    <div class="top">
+        <div class="container">
+          <h1 style="text-align: center; color: white; text-anchor: 12px;">Crea Tu Tizza</h1>
+        </div>
+    </div>
+
+  <form id="form">
+    
+  <div style="background-color: #F8F8FF;" class="container">
+      <div style="text-align: center;">
+          <h2>Seleccione el tipo de pizza</h2>
+      </div>
+    <div class="row">
+      {% for i in mass %}
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="{{i.code}}" checked>
+            <img src="" alt="">
+        </div>
+      {% endfor %}
+    </div>
+      <div class="separation">
+        <h2>Ingredientes</h2>
+      </div>
+      <div class="row">
+        {% for i in ing %}
+        <div class="col-md-4">
+            <span>
+              <img src="" alt="">
+              <i id={{i.code}} class="far fa-grin-beam" style="display: none; "></i>
+              <label for="">{{i.name}}</label>
+              <button type="button" class="btn btn-outline-primary" id={{i.name}}>+</button>
+            </span>
+          
+        </div>
+        {% endfor %}
+      </div>
+      <button type="submit">añadir</button>
+  </div>
+  </form>
+
+  <script src="{% static 'js/jquery-3.2.1.min.js' %}"> </script>
+
+  <script>
+    
+    $(document).ready(function () {
+      dic = {};
+      {# Append fields for dynamic formset to work #}
+      {% for i in ing %}
+      $("#" + "{{i.name}}").click(function(){
+        if(document.getElementById("{{i.code}}").style.display == 'none'){
+          document.getElementById("{{i.code}}").style.display = 'block';
+          $("#" + "{{i.name}}").text("-");
+          dic["{{i.code}}"] = 1;
+          
+        }else{
+          document.getElementById("{{i.code}}").style.display = 'none';
+          $("#" + "{{i.name}}").text("+");
+          dic["{{i.code}}"] = 0;
+
+        }
+      })
+      {% endfor %}
+    });
+    $('#form').submit(function(){
+        
+        $.ajax({
+            url: "{% url 'add_pizza' %}",
+            type: "POST",
+            data: {
+                'diccionario' : dic,
+                'csrfmiddlewaretoken': getCookie('csrftoken'),
+            },
+            success: function (data) {
+                alert("anadido");
+                window.location.href = "{% url 'index' %}";
+            },
+        });
+      });
+  </script>
+  </body>
+</html>
