@@ -85,7 +85,6 @@ def delete_Ingredients(request,code_Ingredients):
     return render(request,'deleteCoach.html', {'team':team})
 
 #Mass
-#INGREDIENTES
 #Listar Mass
 def list_Mass(request):
     template = 'list_Mass.html'
@@ -140,4 +139,61 @@ def delete_Mass(request,code_Mass):
 
     mass.delete()
     return redirect('../list_Mass')
+    return render(request,'deleteCoach.html', {'team':team})
+
+#CLIENTE
+#Listar Client
+def list_Client(request):
+    template = 'list_Client.html'
+    data = {}
+    object_list = Client.objects.all().order_by('-id')
+
+    paginator = Paginator(object_list, 5)
+    page = request.GET.get('page')
+
+    try:
+        data['object_list'] = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        data['object_list'] = paginator.page(1)
+    except EmptyPage:
+        data['object_list'] = paginator.page(paginator.num_pages)
+
+    return render(request, template, data)
+#Add Client
+def add_Client(request):
+    data = {}
+    if request.method == "POST":
+        data['form'] = ClientForm(request.POST, request.FILES)
+
+        if data['form'].is_valid():
+            # aca el formulario valido
+            data['form'].save()
+
+            return redirect('list_Client')
+
+    else:
+        data['form'] = ClientForm()
+
+    template_name = 'add_Client.html'
+    return render(request, template_name, data)
+
+#Edit Client
+def edit_Client(request,code_Client):
+    Client = Client.objects.get(code=code_Client)
+    if request.method == 'GET':
+        form = ClientForm(instance=Client)
+    else:
+        form = ClientForm(request.POST,instance=Client)
+        if form.is_valid():
+            form.save()
+        return redirect('../list_Client.html')
+    return render(request,'add_Client.html',{'form':form})
+
+#Delete Client
+def delete_Client(request,code_Client):
+    Client = Client.objects.get(code=code_Client)
+
+    Client.delete()
+    return redirect('../list_Client')
     return render(request,'deleteCoach.html', {'team':team})

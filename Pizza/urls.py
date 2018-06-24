@@ -14,5 +14,10 @@ urlpatterns = [
     path('list_Mass', views.list_Mass, name="list_Mass"),
     path('edit_Mass/<str:code_Mass>', views.edit_Mass, name="edit_Mass"),
     path('delete_Mass/<str:code_Mass>', views.delete_Mass, name="delete_Mass"),
+    #Clientes
+    path('addClient', views.add_Client, name="add_Client"),
+    path('list_Client', views.list_Client, name="list_Client"),
+    path('edit_Client/<int:id_Client>', views.edit_Client, name="edit_Client"),
+    path('delete_Client/<int:id_Client>', views.delete_Client, name="delete_Client"),
 
 ]
