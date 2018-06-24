@@ -1,8 +1,8 @@
-#Listar Mass
-def list_Mass(request):
-    template = 'list_Mass.html'
+#Listar Client
+def list_Client(request):
+    template = 'list_Client.html'
     data = {}
-    object_list = Mass.objects.all().order_by('-code')
+    object_list = Client.objects.all().order_by('-code')
 
     paginator = Paginator(object_list, 5)
     page = request.GET.get('page')
@@ -16,40 +16,40 @@ def list_Mass(request):
         data['object_list'] = paginator.page(paginator.num_pages)
 
     return render(request, template, data)
-#Add Mass
-def add_Mass(request):
+#Add Client
+def add_Client(request):
     data = {}
     if request.method == "POST":
-        data['form'] = MassForm(request.POST, request.FILES)
+        data['form'] = ClientForm(request.POST, request.FILES)
 
         if data['form'].is_valid():
             # aca el formulario valido
             data['form'].save()
 
-            return redirect('list_Mass')
+            return redirect('list_Client')
 
     else:
-        data['form'] = MassForm()
+        data['form'] = ClientForm()
 
-    template_name = 'add_Mass.html'
+    template_name = 'add_Client.html'
     return render(request, template_name, data)
 
-#Edit Mass
-def edit_Mass(request,code_Mass):
-    mass = Mass.objects.get(code=code_Mass)
+#Edit Client
+def edit_Client(request,code_Client):
+    Client = Client.objects.get(code=code_Client)
     if request.method == 'GET':
-        form = MassForm(instance=mass)
+        form = ClientForm(instance=Client)
     else:
-        form = MassForm(request.POST,instance=mass)
+        form = ClientForm(request.POST,instance=Client)
         if form.is_valid():
             form.save()
-        return redirect('../list_Mass.html')
-    return render(request,'add_Mass.html',{'form':form})
+        return redirect('../list_Client.html')
+    return render(request,'add_Client.html',{'form':form})
 
-#Delete Mass
-def delete_Mass(request,code_Mass):
-    mass = Mass.objects.get(code=code_Mass)
+#Delete Client
+def delete_Client(request,code_Client):
+    Client = Client.objects.get(code=code_Client)
 
-    mass.delete()
-    return redirect('../list_Mass')
+    Client.delete()
+    return redirect('../list_Client')
     return render(request,'deleteCoach.html', {'team':team})

@@ -179,21 +179,21 @@ def add_Client(request):
     return render(request, template_name, data)
 
 #Edit Client
-def edit_Client(request,code_Client):
-    Client = Client.objects.get(code=code_Client)
+def edit_Client(request,id_Client):
+    client = Client.objects.get(id=id_Client)
     if request.method == 'GET':
-        form = ClientForm(instance=Client)
+        form = ClientForm(instance=client)
     else:
-        form = ClientForm(request.POST,instance=Client)
+        form = ClientForm(request.POST,instance=client)
         if form.is_valid():
             form.save()
         return redirect('../list_Client.html')
     return render(request,'add_Client.html',{'form':form})
 
 #Delete Client
-def delete_Client(request,code_Client):
-    Client = Client.objects.get(code=code_Client)
+def delete_Client(request,id_Client):
+    client = Client.objects.get(id=id_Client)
 
-    Client.delete()
+    client.delete()
     return redirect('../list_Client')
     return render(request,'deleteCoach.html', {'team':team})

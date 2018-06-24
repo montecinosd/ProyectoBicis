@@ -15,4 +15,4 @@ class MassForm(ModelForm):
 class ClientForm(ModelForm):
     class Meta:
         model = Client
-        fields =['name','birthday','email','directions','rut','dv',]
+        fields =['name','birthday','email','directions','user','rut','dv',]
