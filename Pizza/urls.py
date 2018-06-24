@@ -9,6 +9,10 @@ urlpatterns = [
     path('list_Ingredients', views.list_Ingredients, name="list_Ingredients"),
     path('edit_Ingredients/<int:code_Ingredients>', views.edit_Ingredients, name="edit_Ingredients"),
     path('delete_Ingredients/<int:code_Ingredients>', views.delete_Ingredients, name="delete_Ingredients"),
-
+    #Mass
+    path('addMass', views.add_Mass, name="add_Mass"),
+    path('list_Mass', views.list_Mass, name="list_Mass"),
+    path('edit_Mass/<str:code_Mass>', views.edit_Mass, name="edit_Mass"),
+    path('delete_Mass/<str:code_Mass>', views.delete_Mass, name="delete_Mass"),
 
 ]
