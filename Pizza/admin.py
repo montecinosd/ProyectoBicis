@@ -22,3 +22,7 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     list_display = ('user','total_cost','order_direccion','pizza',)
+
+@admin.register(Pizza)
+class PizzaAdmin(admin.ModelAdmin):
+    list_display = ('type_mass',)
