@@ -40,7 +40,7 @@ class Direction(models.Model):
 
 class Pizza(models.Model):
     type_mass = models.ForeignKey(Mass, on_delete=models.CASCADE)
-    Ingredients = models.ManyToManyField(Ingredients)
+    Ingredient = models.ManyToManyField(Ingredients)
 
 class Order(models.Model):
     user = models.ForeignKey(Client, on_delete=models.CASCADE)
