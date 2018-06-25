@@ -43,9 +43,12 @@
       </div>
     <div class="row">
       {% for i in mass %}
+        <div class="col-md-4">
+          
         <div class="form-check">
             <input class="form-check-input" type="radio" name="exampleRadios" id="{{i.code}}" value="{{i.code}}" checked>
             <img height="200px" width="200px" src="{% get_media_prefix %}{{i.image}}" alt="">
+        </div>
         </div>
       {% endfor %}
   <form id="formpizza">
@@ -109,14 +112,27 @@
         }
         return cookieValue;
     }
-    var list_mass = $("#form-check-input")
     $('#formpizza').submit(function(){
+    
+    var a = 0;
+    var i = true;
+    while(i){ 
+      if($(".form-check-input")[a] != undefined ){
+        if($(".form-check-input")[a].checked){
+          var mass = $(".form-check-input")[a].id;
+        }
+      }else{
+        i = false; 
+      } 
+      a = a + 1 
+      }
+      alert(mass);
     $.ajax({
         url: "{% url 'index' %}",
         type: "POST",
         data: {
             'list_ing': String(list_ing),
-            'list_mass': String(list_mass),
+            'mass': String(mass),
             'csrfmiddlewaretoken': getCookie('csrftoken'),
             
         },
