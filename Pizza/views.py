@@ -19,8 +19,6 @@ def index(request):
     lista_imag = []
     data["mass"] = Mass.objects.all()
 
-
-    data["total"] = zip(ingredient,lista_imag)
     if request.POST:
     	lista_obj = []
     	
@@ -215,3 +213,16 @@ def delete_Client(request,id_Client):
     client.delete()
     return redirect('../list_Client')
     return render(request,'deleteCoach.html', {'team':team})
+
+def add_dir(request):
+	template_name = "add_direction.html"
+	data = {}
+	if request.method == "POST":
+		data['form'] = DirectionForm(request.POST, request.FILES)
+		if data['form'].is_valid():
+			return redirect('index')
+	else:
+		data['form'] = DirectionForm()
+
+	return render(request, template_name, data)
+	

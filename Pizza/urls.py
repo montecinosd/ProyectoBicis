@@ -20,4 +20,8 @@ urlpatterns = [
     path('edit_Client/<int:id_Client>', views.edit_Client, name="edit_Client"),
     path('delete_Client/<int:id_Client>', views.delete_Client, name="delete_Client"),
 
+    #direccion
+    path('add_dir/', views.add_dir, name="add_dir"),
+    
+
 ]
