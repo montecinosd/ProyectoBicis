@@ -40,7 +40,9 @@ def index(request):
 	    	orden.save()
 	    	for i in lista_obj:
 	    		orden.Ingredient.add(i)
-	    	return JsonResponse({})
+
+	    	price = request.POST["price"]
+
 	    return render(request, template_name, data)
 	else:
 		data={}
@@ -258,12 +260,16 @@ def delete_Client(request,id_Client):
 def add_dir(request):
 	template_name = "add_direction.html"
 	data = {}
-	piz = Pizza.objects.get(pk = (Pizza.objects.all().count()))
-	print(piz.Ingredient[0])
 
 	if request.method == "POST":
 		data['form'] = DirectionForm(request.POST, request.FILES)
 		if data['form'].is_valid():
+			piz = Pizza.objects.get(pk = (Pizza.objects.all().count()))
+			cost = 0
+			for i in piz.Ingredient.all():
+				cost = cost + i.price
+
+			cost = cost + piz.type_mass.price
 
 			direc = Direction(name_street = request.POST["name_street"],number_street= request.POST["number_street"],city = request.POST["city"],commune = request.POST["commune"]) 
 			us = User.objects.get(username = request.user)
@@ -271,6 +277,11 @@ def add_dir(request):
 			direc.clients = clien
 			direc.save()
 
+			orde = Order(total_cost = cost)
+			orde.user = clien
+			orde.order_direccion = direc 
+			orde.pizza = piz
+			orde.save()
 
 
 			return redirect('index')

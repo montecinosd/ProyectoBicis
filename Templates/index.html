@@ -35,10 +35,11 @@
     <div class="top">
         <div class="container">
           <h1 style="text-align: center; color: white; text-anchor: 12px;">Crea Tu Tizza</h1>
+          <p style="text-align: right; color: white;">Hola {{request.user}} /<a href="{% url 'auth_logout' %}">Salir</a></p>
         </div>
     </div>
 
-    
+  
   <div style="background-color: #F8F8FF;" class="container">
       <div style="text-align: center;">
           <h2>Seleccione el tipo de pizza</h2>
