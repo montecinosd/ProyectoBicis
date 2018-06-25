@@ -16,12 +16,12 @@
   </head>
   <style>
     .top {
-      background-color: #A52A2A; 
+      background-color: #A52A2A;
       padding-top: 80px;
     }
     .container{
       padding-top: 5px;
-      
+
     }
     .separation {
 
@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    
+
   <div style="background-color: #F8F8FF;" class="container">
       <div style="text-align: center;">
           <h2>Seleccione el tipo de pizza</h2>
@@ -46,7 +46,6 @@
     <div class="row">
       {% for i in mass %}
         <div class="col-md-4">
-          
         <div class="form-check">
             <input class="form-check-input" type="radio" name="exampleRadios" id="{{i.code}}" value="{{i.code}}" checked>
             <img height="200px" width="200px" id="img{{i.code}}" src="{% get_media_prefix %}{{i.image}}" alt="">
@@ -67,44 +66,80 @@
               <button type="button" class="btn btn-outline-primary" id={{i.name}}>+</button>
               <i id={{i.code}} class="far fa-grin-beam" style="display: none; "></i>
             </span>
-          
+
         </div>
         {% endfor %}
+  <div id=costo class="div">
+    <p>Costo Total: 0</p>
+  </div>
   </div>
       <div class="row justify-content-md-center">
         <button style="text-align: center;" type="submit" class="btn btn-primary">añadir</button>
-        
       </div>
   </form>
 
   <script src="{% static 'js/jquery-3.2.1.min.js' %}"> </script>
 
   <script>
-    
+
     $(document).ready(function () {
       list_ing = [];
+      var price = 0;
       {# Append fields for dynamic formset to work #}
       {% for i in ing %}
       $("#" + "{{i.name}}").click(function(){
+
         if(document.getElementById("{{i.code}}").style.display == 'none'){
+          price = price + {{i.price}}
+          // alert(price)
+          // alert("++{{i.price}}");
           // document.getElementById("{{i.code}}").style.display = 'block';
           $("#" + "{{i.code}}").show();
           $("#" + "{{i.name}}").text("-");
           list_ing.push("{{i.code}}");
-          
+          $('#costo').html('<p>Costo Total: '+ price +'</p>');
+
+
         }else{
+          // alert("--{{i.price}}");
+          price = price - {{i.price}}
+          // alert(price)
+
           document.getElementById("{{i.code}}").style.display = 'none';
           $("#" + "{{i.name}}").text("+");
           delete list_ing[list_ing.indexOf("{{i.code}}")];
+          $('#costo').html('<p>Costo Total: '+ price +'</p>');
 
         }
       })
       {% endfor %}
+      var aux = 0;
       {% for i in mass %}
+    // CUANDO DA CLICK A LA IMAGEN
         $("#img{{i.code}}").click(function(){
+          // alert("ASDDD")
+          if (aux != 0){
+            price = price - aux
+          }
+          aux = {{i.price}}
+          price = price + {{i.price}}
           $("#{{i.code}}")[0].checked = 'true';
-        
+          $('#costo').html('<p>Costo Total: '+ price +'</p>');
+
         })
+    // CUANDO DA CLICK AL CHECJBUTTON
+        $("#{{i.code}}").click(function(){
+          // alert("ASDDD")
+          if (aux != 0){
+            price = price - aux
+          }
+          aux = {{i.price}}
+          price = price + {{i.price}}
+          $("#{{i.code}}")[0].checked = 'true';
+          $('#costo').html('<p>Costo Total: '+ price +'</p>');
+
+        })
+
       {% endfor %}
     });
     function getCookie(name) {
@@ -123,18 +158,17 @@
         return cookieValue;
     }
     $('#formpizza').submit(function(){
-    
     var a = 0;
     var i = true;
-    while(i){ 
+    while(i){
       if($(".form-check-input")[a] != undefined ){
         if($(".form-check-input")[a].checked){
           var mass = $(".form-check-input")[a].id;
         }
       }else{
-        i = false; 
-      } 
-      a = a + 1 
+        i = false;
+      }
+      a = a + 1
       }
       alert(mass);
     $.ajax({
@@ -147,7 +181,6 @@
         },
         success: function (data) {
             window.location.href = "{% url 'add_dir' %}";
-            
         },
     });
     return false;

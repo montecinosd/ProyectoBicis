@@ -21,14 +21,14 @@ def index(request):
 
     if request.POST:
     	lista_obj = []
-    	
+
     	for i in request.POST["list_ing"].split(","):
     		try:
     			lista_obj.append(Ingredients.objects.get(code=i))
     		except:
     			raise
     	masa = Mass.objects.get(code = request.POST["mass"])
-    	
+
     	orden = Pizza(type_mass=masa)
     	orden.save()
     	for i in lista_obj:
@@ -146,7 +146,7 @@ def edit_Mass(request,code_Mass):
         form = MassForm(request.POST,instance=mass)
         if form.is_valid():
             form.save()
-        return redirect('../list_Mass.html')
+        return redirect('list_Mass')
     return render(request,'add_Mass.html',{'form':form})
 
 #Delete Mass
@@ -225,4 +225,3 @@ def add_dir(request):
 		data['form'] = DirectionForm()
 
 	return render(request, template_name, data)
-	
