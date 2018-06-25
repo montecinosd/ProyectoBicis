@@ -5,8 +5,10 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
 
 
 
@@ -14,12 +16,12 @@
   </head>
   <style>
     .top {
-      background-color: #A52A2A; 
+      background-color: #A52A2A;
       padding-top: 80px;
     }
     .container{
       padding-top: 5px;
-      
+
     }
     .separation {
 
@@ -36,16 +38,19 @@
         </div>
     </div>
 
-    
+
   <div style="background-color: #F8F8FF;" class="container">
       <div style="text-align: center;">
           <h2>Seleccione el tipo de pizza</h2>
       </div>
     <div class="row">
       {% for i in mass %}
+        <div class="col-md-4">
+
         <div class="form-check">
             <input class="form-check-input" type="radio" name="exampleRadios" id="{{i.code}}" value="{{i.code}}" checked>
-            <img height="200px" width="200px" src="{% get_media_prefix %}{{i.image}}" alt="">
+            <img height="200px" width="200px" id="img{{i.code}}" src="{% get_media_prefix %}{{i.image}}" alt="">
+        </div>
         </div>
       {% endfor %}
   <form id="formpizza">
@@ -54,44 +59,75 @@
         <h2>Ingredientes</h2>
       </div>
       <div class="row">
-        {% for i in total %}
+        {% for i in ing %}
         <div class="col-md-4">
             <span>
-              <img height="200px" width="200px" src="{% get_media_prefix %}{{i.0.image}}" alt="">
-              <label for="">{{i.0.name}}</label>
-              <button type="button" class="btn btn-outline-primary" id={{i.0.name}}>+</button>
-              <i id={{i.0.code}} class="far fa-grin-beam" style="display: none; "></i>
+              <img height="200px" width="200px" src="{% get_static_prefix %}{{i.image}}" alt="">
+              <label for="">{{i.name}}</label>
+              <button type="button" class="btn btn-outline-primary" id={{i.name}}>+</button>
+              <i id={{i.code}} class="far fa-grin-beam" style="display: none; "></i>
             </span>
-          
+
         </div>
         {% endfor %}
-      </div>
-      <button type="submit">añadir</button>
+  <div id=costo class="div">
+    COSTO TOTAL:
   </div>
+  </div>
+      <div class="row justify-content-md-center">
+        <button style="text-align: center;" type="submit" class="btn btn-primary">añadir</button>
+
+      </div>
   </form>
 
   <script src="{% static 'js/jquery-3.2.1.min.js' %}"> </script>
 
   <script>
-    
+
     $(document).ready(function () {
       list_ing = [];
+      var price = 0;
       {# Append fields for dynamic formset to work #}
       {% for i in ing %}
       $("#" + "{{i.name}}").click(function(){
+
         if(document.getElementById("{{i.code}}").style.display == 'none'){
+          price = price + {{i.price}}
+          alert(price)
+          // alert("++{{i.price}}");
           // document.getElementById("{{i.code}}").style.display = 'block';
           $("#" + "{{i.code}}").show();
           $("#" + "{{i.name}}").text("-");
           list_ing.push("{{i.code}}");
-          
+          $('#costo').html('<p>Costo Total: '+ price +'</p>');
+
+
         }else{
+          // alert("--{{i.price}}");
+          price = price - {{i.price}}
+          alert(price)
+
           document.getElementById("{{i.code}}").style.display = 'none';
           $("#" + "{{i.name}}").text("+");
           delete list_ing[list_ing.indexOf("{{i.code}}")];
+          $('#costo').html('<p>Costo Total: '+ price +'</p>');
 
         }
       })
+      {% endfor %}
+      var aux = 0;
+      {% for i in mass %}
+        $("#img{{i.code}}").click(function(){
+          // alert("ASDDD")
+          if (aux != 0){
+            price = price - aux
+          }
+          aux = {{i.price}}
+          price = price + {{i.price}}
+          $("#{{i.code}}")[0].checked = 'true';
+          $('#costo').html('<p>Costo Total: '+ price +'</p>');
+
+        })
       {% endfor %}
     });
     function getCookie(name) {
@@ -109,23 +145,40 @@
         }
         return cookieValue;
     }
-    var list_mass = $("#form-check-input")
     $('#formpizza').submit(function(){
+
+    var a = 0;
+    var i = true;
+    while(i){
+      if($(".form-check-input")[a] != undefined ){
+        if($(".form-check-input")[a].checked){
+          var mass = $(".form-check-input")[a].id;
+        }
+      }else{
+        i = false;
+      }
+      a = a + 1
+      }
+      alert(mass);
     $.ajax({
         url: "{% url 'index' %}",
         type: "POST",
         data: {
             'list_ing': String(list_ing),
-            'list_mass': String(list_mass),
+            'mass': String(mass),
             'csrfmiddlewaretoken': getCookie('csrftoken'),
-            
         },
         success: function (data) {
-            alert("Funciono");
+            window.location.href = "{% url 'add_dir' %}";
+
         },
     });
     return false;
   });
   </script>
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
   </body>
 </html>
