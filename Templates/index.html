@@ -71,7 +71,7 @@
         </div>
         {% endfor %}
   <div id=costo class="div">
-    COSTO TOTAL:
+    <p>Costo Total: 0</p>
   </div>
   </div>
       <div class="row justify-content-md-center">
@@ -93,7 +93,7 @@
 
         if(document.getElementById("{{i.code}}").style.display == 'none'){
           price = price + {{i.price}}
-          alert(price)
+          // alert(price)
           // alert("++{{i.price}}");
           // document.getElementById("{{i.code}}").style.display = 'block';
           $("#" + "{{i.code}}").show();
@@ -105,7 +105,7 @@
         }else{
           // alert("--{{i.price}}");
           price = price - {{i.price}}
-          alert(price)
+          // alert(price)
 
           document.getElementById("{{i.code}}").style.display = 'none';
           $("#" + "{{i.name}}").text("+");
@@ -117,6 +117,7 @@
       {% endfor %}
       var aux = 0;
       {% for i in mass %}
+    // CUANDO DA CLICK A LA IMAGEN
         $("#img{{i.code}}").click(function(){
           // alert("ASDDD")
           if (aux != 0){
@@ -128,6 +129,19 @@
           $('#costo').html('<p>Costo Total: '+ price +'</p>');
 
         })
+    // CUANDO DA CLICK AL CHECJBUTTON
+        $("#{{i.code}}").click(function(){
+          // alert("ASDDD")
+          if (aux != 0){
+            price = price - aux
+          }
+          aux = {{i.price}}
+          price = price + {{i.price}}
+          $("#{{i.code}}")[0].checked = 'true';
+          $('#costo').html('<p>Costo Total: '+ price +'</p>');
+
+        })
+
       {% endfor %}
     });
     function getCookie(name) {
