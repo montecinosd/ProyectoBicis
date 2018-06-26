@@ -59,9 +59,7 @@ def add_pizza(request):
     	print(request.POST["diccionario"])
     	return render(request, template_name, data)
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
 #INGREDIENTES
 #Listar Ing
 def list_Ingredients(request):
@@ -84,9 +82,8 @@ def list_Ingredients(request):
 
         return render(request, template, data)
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
+        
 #Add Ing
 def add_Ingredients(request):
     if(request.user.is_staff == True):
@@ -107,9 +104,8 @@ def add_Ingredients(request):
         template_name = 'add_Ingredients.html'
         return render(request, template_name, data)
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
+        
 #Edit Ing
 def edit_Ingredients(request,code_Ingredients):
     if(request.user.is_staff == True):
@@ -124,9 +120,8 @@ def edit_Ingredients(request,code_Ingredients):
             return redirect('../list_Ingredients.html')
         return render(request,'add_Ingredients.html',{'form':form})
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
+        
 #Delete Ingredients
 def delete_Ingredients(request,code_Ingredients):
     if(request.user.is_staff == True):
@@ -137,9 +132,8 @@ def delete_Ingredients(request,code_Ingredients):
         return redirect('../list_Ingredients')
         return render(request,'deleteCoach.html', {'team':team})
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
+        
 #Mass
 #Listar Mass
 def list_Mass(request):
@@ -162,9 +156,8 @@ def list_Mass(request):
 
         return render(request, template, data)
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
+        
 #Add Mass
 def add_Mass(request):
     if(request.user.is_staff == True):
@@ -185,9 +178,8 @@ def add_Mass(request):
         template_name = 'add_Mass.html'
         return render(request, template_name, data)
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
+        
 #Edit Mass
 def edit_Mass(request,code_Mass):
     if(request.user.is_staff == True):
@@ -215,9 +207,8 @@ def delete_Mass(request,code_Mass):
         return redirect('../list_Mass')
         return render(request,'deleteCoach.html', {'team':team})
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
+        
 #CLIENTE
 #Listar Client
 def list_Client(request):
@@ -240,9 +231,8 @@ def list_Client(request):
 
         return render(request, template, data)
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
+        
 #Add Client
 @login_required(login_url='/auth/login')
 def add_Client(request):
@@ -268,9 +258,8 @@ def add_Client(request):
         template_name = 'add_Client.html'
         return render(request, template_name, data)
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
+        
 
 @login_required(login_url='/auth/login')
 def add_User(request):
@@ -292,9 +281,8 @@ def add_User(request):
         return render(request, template_name, data)
 
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
+        
 
 
 #Edit Client
@@ -312,9 +300,8 @@ def edit_Client(request,id_Client):
         return render(request,'add_Client.html',{'form':form})
 
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
+        
 
 #Delete Client
 def delete_Client(request,id_Client):
@@ -327,9 +314,8 @@ def delete_Client(request,id_Client):
         return render(request,'deleteCoach.html', {'team':team})
 
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
+        
 
 def add_dir(request):
     if(request.user.is_staff == False):
@@ -368,9 +354,7 @@ def add_dir(request):
     	return render(request, template_name, data)
 
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
 
 #orden
 def list_Order(request):
@@ -395,6 +379,5 @@ def list_Order(request):
     	return render(request, template, data)
 
     else:
-        data={}
-        template_name = "index_super_user.html"
-        return render(request, template_name,data)
+        return redirect('index')
+        
