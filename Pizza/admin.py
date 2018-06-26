@@ -21,7 +21,7 @@ class UserAdmin(admin.ModelAdmin):
             % (obj.picture.url))
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ('user','total_cost','order_direccion','pizza',)
+    list_display = ('user','total_cost','order_direccion','pizza','date')
 
 @admin.register(Pizza)
 class PizzaAdmin(admin.ModelAdmin):

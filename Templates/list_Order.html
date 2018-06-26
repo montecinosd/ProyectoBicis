@@ -34,7 +34,7 @@ Listar Ordenes
                 <table class="table table-striped">
                   <thead>
                     <tr>
-                      <th scope="col">#</th>
+                      <th scope="col">Fecha</th>
                       <th scope="col">Cliente</th>
                       <th scope="col">Costo total</th>
                       <th scope="col">Direccion de la orden</th>
@@ -47,7 +47,7 @@ Listar Ordenes
 
 
                     <tr>
-                      <th scope="row">{{i.id}}</th>
+                      <th scope="row">{{i.date}}</th>
                       <td>{{i.user.name}}</td>
                       <td>{{i.total_cost}}</td>
                       <td>{{i.order_direccion.commune}}, {{i.order_direccion.name_street}} {{i.order_direccion.number_street}}. {{i.order_direccion.city}}</td>

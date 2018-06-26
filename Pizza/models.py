@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-
 # Create your models here.
 
 class Mass(models.Model):
@@ -47,3 +46,4 @@ class Order(models.Model):
     total_cost =  models.PositiveIntegerField()
     order_direccion = models.ForeignKey(Direction, on_delete=models.CASCADE)
     pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add=True)
