@@ -27,8 +27,6 @@ urlpatterns = [
     #direccion
     path('add_dir/', views.add_dir, name="add_dir"),
 
-    #Welcome
-    path('welcome/', views.welcome, name="welcome"),
 
 
 
