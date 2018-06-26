@@ -284,8 +284,7 @@ def add_dir(request):
 			orde.pizza = piz
 			orde.save()
 
-
-			return redirect('index')
+			return redirect('list_Order')
 
 
 	else:
@@ -295,19 +294,20 @@ def add_dir(request):
 
 #orden
 def list_Order(request):
-    template = 'list_Order.html'
-    data = {}
-    object_list = Order.objects.all().order_by('-id')
+	us = User.objects.get(username = request.user)
+	clien = Client.objects.get(user = us)
+	template = 'list_Order.html'
+	data = {}
+	object_list = Order.objects.filter(user=clien).order_by('-id')
 
-    paginator = Paginator(object_list, 5)
-    page = request.GET.get('page')
+	paginator = Paginator(object_list, 5)
+	page = request.GET.get('page')
 
-    try:
-        data['object_list'] = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        data['object_list'] = paginator.page(1)
-    except EmptyPage:
-        data['object_list'] = paginator.page(paginator.num_pages)
+	try:
+		data['object_list'] = paginator.page(page)
+	except PageNotAnInteger:
+		data['object_list'] = paginator.page(1)
+	except EmptyPage:
+		data['object_list'] = paginator.page(paginator.num_pages)
 
-    return render(request, template, data)
+	return render(request, template, data)
