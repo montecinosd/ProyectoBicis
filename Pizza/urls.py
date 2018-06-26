@@ -20,6 +20,9 @@ urlpatterns = [
     path('edit_Client/<int:id_Client>', views.edit_Client, name="edit_Client"),
     path('delete_Client/<int:id_Client>', views.delete_Client, name="delete_Client"),
     path('addUser/', views.add_User, name="add_User"),
+    #Order
+    path('list_Order', views.list_Order, name="list_Order"),
+
 
     #direccion
     path('add_dir/', views.add_dir, name="add_dir"),
@@ -27,6 +30,6 @@ urlpatterns = [
     #Welcome
     path('welcome/', views.welcome, name="welcome"),
 
-    
+
 
 ]

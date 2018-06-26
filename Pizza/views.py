@@ -25,6 +25,7 @@ def index(request):
 	    if request.POST:
 	    	lista_obj = []
 	    	filtro = []
+
 	    	for i in request.POST["list_ing"].split(","):
 	    		if( i != ''):
 	    			filtro.append(i)
@@ -35,7 +36,7 @@ def index(request):
 	    		except:
 	    			raise
 	    	masa = Mass.objects.get(code = request.POST["mass"])
-	    	
+
 	    	orden = Pizza(type_mass=masa)
 	    	orden.save()
 	    	for i in lista_obj:
@@ -271,7 +272,7 @@ def add_dir(request):
 
 			cost = cost + piz.type_mass.price
 
-			direc = Direction(name_street = request.POST["name_street"],number_street= request.POST["number_street"],city = request.POST["city"],commune = request.POST["commune"]) 
+			direc = Direction(name_street = request.POST["name_street"],number_street= request.POST["number_street"],city = request.POST["city"],commune = request.POST["commune"])
 			us = User.objects.get(username = request.user)
 			clien = Client.objects.get(user = us)
 			direc.clients = clien
@@ -291,3 +292,22 @@ def add_dir(request):
 		data['form'] = DirectionForm()
 
 	return render(request, template_name, data)
+
+#orden
+def list_Order(request):
+    template = 'list_Order.html'
+    data = {}
+    object_list = Order.objects.all().order_by('-id')
+
+    paginator = Paginator(object_list, 5)
+    page = request.GET.get('page')
+
+    try:
+        data['object_list'] = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        data['object_list'] = paginator.page(1)
+    except EmptyPage:
+        data['object_list'] = paginator.page(paginator.num_pages)
+
+    return render(request, template, data)
