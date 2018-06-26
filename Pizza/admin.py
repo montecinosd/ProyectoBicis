@@ -26,3 +26,7 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(Pizza)
 class PizzaAdmin(admin.ModelAdmin):
     list_display = ('type_mass',)
+
+@admin.register(Direction)
+class DirectionAdmin(admin.ModelAdmin):
+    list_display = ('name_street','number_street','city','commune','clients',)
