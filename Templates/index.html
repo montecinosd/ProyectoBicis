@@ -7,13 +7,13 @@
 
 {% block nav %}
 <div class="navd">
-      
-    <a  href="{% url 'index' %}">      
+
+    <a  href="{% url 'index' %}">
       <button style="background-color: #A52A2A; color: black;border-radius:10px;outline:none;" class="btn btn-secondary" type="button">
         Crea Tu pizza
       </button>
     </a>
-    <a href="{% url 'list_Order' %}">      
+    <a href="{% url 'list_Order' %}">
       <button style="background-color: #A52A2A; color: black;border-radius:10px;outline:none;" class="btn btn-secondary" type="button">
         Ver Pedidos
       </button>
@@ -25,9 +25,9 @@
   <div style="background-color: #F8F8FF;" class="container">
 
     <div class="row intruction">
-      <div class="col-md-10"><h2>Hola, {{request.user}}</h2>    <p class="cost"> Arma tu pizza a tu elección, selecciona tu masa ideal y tus ingredientes favoritos! <br> Debes seleccionar ambos para luego poder agregar la dirección de despacho.</p>
+      <div class"col-lg-10 col-sm-10 col-md-10 col-xl-10"><h2>Hola, {{request.user}}</h2>    <p class="cost"> Arma tu pizza a tu elección, selecciona tu masa ideal y tus ingredientes favoritos! <br> Debes seleccionar ambos para luego poder agregar la dirección de despacho.</p>
 </div>
-      <div class="col-md-2"><h2><a  href="{% url 'auth_logout' %}">Salir</a> </h2></div>
+      <div class="col-lg-2 col-sm-2 col-md-2 col-xl-2"><h2><a  href="{% url 'auth_logout' %}">Salir</a> </h2></div>
     </div>
 
       <div class="separation textoblanco">
@@ -52,7 +52,7 @@
       </div>
       <div class="row">
         {% for i in ing %}
-        <div class="col-md-4">
+        <div class="col-lg-4 col-sm-12 col-md-4 col-xl-4">
             <span>
               <button type="button" class="btn btn-outline-primary" id={{i.name}}>+</button>
               <img height="200px" width="200px" src="{% get_static_prefix %}{{i.image}}" alt="">
