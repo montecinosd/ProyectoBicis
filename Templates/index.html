@@ -55,11 +55,10 @@
 
     $(document).ready(function () {
       list_ing = [];
-      var price = 0;
+      price = 0;
       {# Append fields for dynamic formset to work #}
       {% for i in ing %}
       $("#" + "{{i.name}}").click(function(){
-
         if(document.getElementById("{{i.code}}").style.display == 'none'){
           price = price + {{i.price}}
           // alert(price)
@@ -75,7 +74,6 @@
           // alert("--{{i.price}}");
           price = price - {{i.price}}
           // alert(price)
-
           document.getElementById("{{i.code}}").style.display = 'none';
           $("#" + "{{i.name}}").text("+");
           delete list_ing[list_ing.indexOf("{{i.code}}")];
@@ -108,9 +106,7 @@
           price = price + {{i.price}}
           $("#{{i.code}}")[0].checked = 'true';
           $('#costo').html('<p>Costo Total: '+ price +'</p>');
-
         })
-
       {% endfor %}
     });
     function getCookie(name) {
@@ -129,6 +125,7 @@
         return cookieValue;
     }
     $('#formpizza').submit(function(){
+
     var a = 0;
     var i = true;
     while(i){
@@ -148,10 +145,12 @@
         data: {
             'list_ing': String(list_ing),
             'mass': String(mass),
+            'price': String(price),
             'csrfmiddlewaretoken': getCookie('csrftoken'),
         },
         success: function (data) {
             window.location.href = "{% url 'add_dir' %}";
+
         },
     });
     return false;

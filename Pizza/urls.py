@@ -19,8 +19,10 @@ urlpatterns = [
     path('list_Client', views.list_Client, name="list_Client"),
     path('edit_Client/<int:id_Client>', views.edit_Client, name="edit_Client"),
     path('delete_Client/<int:id_Client>', views.delete_Client, name="delete_Client"),
+    path('addUser/', views.add_User, name="add_User"),
     #Order
     path('list_Order', views.list_Order, name="list_Order"),
+
 
     #direccion
     path('add_dir/', views.add_dir, name="add_dir"),

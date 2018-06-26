@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='/auth/login')
 def index(request):
-	if(request.user.is_staff == True):
+	if(request.user.is_staff == False):
 	    data = {}
 
 
@@ -24,10 +24,15 @@ def index(request):
 
 	    if request.POST:
 	    	lista_obj = []
+	    	filtro = []
 
 	    	for i in request.POST["list_ing"].split(","):
+	    		if( i != ''):
+	    			filtro.append(i)
+	    	for i in filtro:
 	    		try:
-	    			lista_obj.append(Ingredients.objects.get(code=i))
+	    			obj = Ingredients.objects.get(code=i)
+	    			lista_obj.append(obj)
 	    		except:
 	    			raise
 	    	masa = Mass.objects.get(code = request.POST["mass"])
@@ -36,10 +41,14 @@ def index(request):
 	    	orden.save()
 	    	for i in lista_obj:
 	    		orden.Ingredient.add(i)
-	    	return JsonResponse({})
+
+	    	price = request.POST["price"]
+
 	    return render(request, template_name, data)
 	else:
-		pass
+		data={}
+		template_name = "index_super_user.html"
+		return render(request, template_name,data)
 
 def welcome(request):
 	template = "welcome.html"
@@ -188,22 +197,46 @@ def list_Client(request):
 
     return render(request, template, data)
 #Add Client
+@login_required(login_url='/auth/login')
 def add_Client(request):
     data = {}
     if request.method == "POST":
         data['form'] = ClientForm(request.POST, request.FILES)
+        use = User.objects.all()
+        users = User.objects.get(pk = len(use))
 
-        if data['form'].is_valid():
+        if (data['form'].is_valid()):
             # aca el formulario valido
-            data['form'].save()
-
-            return redirect('list_Client')
-
+            us = Client(name=request.POST["name"], email=request.POST["email"],
+            rut=request.POST["rut"], dv=request.POST["dv"], birthday = request.POST["birthday"])
+            us.user = users
+            us.save()
+            return redirect('index')
+            
     else:
         data['form'] = ClientForm()
 
     template_name = 'add_Client.html'
     return render(request, template_name, data)
+
+@login_required(login_url='/auth/login')
+def add_User(request):
+
+    data = {}
+    if request.method == "POST":
+        data['form'] = ClientUserForm(request.POST, request.FILES)
+        
+        if (data['form'].is_valid()):
+            # aca el formulario valido
+            User.objects.create_user(username=request.POST["username"],
+                            password= request.POST["password1"])
+            return redirect('add_Client')
+    else:
+        data['form'] = UserCreationForm()
+
+    template_name = 'add_Client.html'
+    return render(request, template_name, data)
+
 
 #Edit Client
 def edit_Client(request,id_Client):
@@ -228,16 +261,33 @@ def delete_Client(request,id_Client):
 def add_dir(request):
 	template_name = "add_direction.html"
 	data = {}
+
 	if request.method == "POST":
 		data['form'] = DirectionForm(request.POST, request.FILES)
 		if data['form'].is_valid():
+			piz = Pizza.objects.get(pk = (Pizza.objects.all().count()))
+			cost = 0
+			for i in piz.Ingredient.all():
+				cost = cost + i.price
+
+			cost = cost + piz.type_mass.price
 
 			direc = Direction(name_street = request.POST["name_street"],number_street= request.POST["number_street"],city = request.POST["city"],commune = request.POST["commune"])
 			us = User.objects.get(username = request.user)
 			clien = Client.objects.get(user = us)
 			direc.clients = clien
 			direc.save()
+
+			orde = Order(total_cost = cost)
+			orde.user = clien
+			orde.order_direccion = direc 
+			orde.pizza = piz
+			orde.save()
+
+
 			return redirect('index')
+
+
 	else:
 		data['form'] = DirectionForm()
 
