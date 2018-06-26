@@ -1,57 +1,29 @@
+{% extends 'Partials/_Base.html' %}
 {% load bootstrap4 %}
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-
+{% load static %}
+{% block Titulo %}
+Super usuario
+{% endblock %}
+{% block content %}
     <title>Inicio</title>
-  </head>
+
   <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container">
-          
-      <a class="navbar-brand" href="#">Bienvenido</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
       </div>
     </nav>
     <div class="container">
-        
-            <p>Hola {{request.user}} /<a href="{% url 'auth_logout' %}">Salir</a></p>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            <center>    <h1>Escoja opcion</h1> </center>
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-            &nbsp;
-        <div class="row">
-            
+
+      <div class="row cost">
+        <div class="col-md-10"><h2>Hola, {{request.user}}</h2></div>
+        <div class="col-md-2"><h2><a  href="{% url 'auth_logout' %}">Salir</a> </h2></div>
+      </div>
+       <center class="paddin4">    <h1>Escoja opcion</h1> </center>
+          <div class="row justify-content-md-center ">
+
             <div class="col-4">
               <a href="{% url 'list_Mass' %}">
-                
+
               <button type="button" class="btn btn-outline-primary btn-block btn-lg">CRUD MASS</button>
 
               </a>
@@ -59,23 +31,23 @@
 
             <div class="col-4">
               <a href="{% url 'list_Ingredients' %}">
-                
+
               <button type="button" class="btn btn-outline-secondary btn-block btn-lg">CRUD INGREDIENTS</button>
-             
+
               </a>
             </div>
 
             <div class="col-4">
               <a href="{% url 'list_Client' %}">
-                
+
               <button type="button" class="btn btn-outline-success btn-block btn-lg">CRUD CLIENT</button>
-              
+
               </a>
             </div>
 
-            
+
         </div>
-      
+
     </div>
 
     <!-- Optional JavaScript -->
@@ -83,5 +55,5 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-  </body>
-</html>
+
+{% endblock %}
