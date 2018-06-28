@@ -12,8 +12,8 @@ urlpatterns = [
     #Mass
     path('addMass', views.add_Mass, name="add_Mass"),
     path('list_Mass', views.list_Mass, name="list_Mass"),
-    path('edit_Mass/<str:pk_Mass>', views.edit_Mass, name="edit_Mass"),
-    path('delete_Mass/<str:pk_Mass>', views.delete_Mass, name="delete_Mass"),
+    path('edit_Mass/<int:pk_Mass>', views.edit_Mass, name="edit_Mass"),
+    path('delete_Mass/<int:pk_Mass>', views.delete_Mass, name="delete_Mass"),
     #Clientes
     path('addClient', views.add_Client, name="add_Client"),
     path('list_Client', views.list_Client, name="list_Client"),
