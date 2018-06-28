@@ -37,7 +37,7 @@ Listar Ingredientes
                       <th scope="row"></th>
                       <td>{{i.name}}</td>
                       <td>{{i.description}}</td>
-                      <td>{{i.image}}</td>
+                      <td><img src="{{i.image.url}}" alt="img"></td>
                       <td>{{i.code}}</td>
                       <td>{{i.price}}</td>
 
@@ -47,8 +47,8 @@ Listar Ingredientes
                             Manager
                           </button>
                           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <button class="dropdown-item" type="button"><a href="{% url 'edit_Ingredients' i.code %}">Editar</a></button>
-                            <button class="dropdown-item" type="button"><a href="{% url 'delete_Ingredients' i.code %}">Eliminar</a></button>
+                            <button class="dropdown-item" type="button"><a href="{% url 'edit_Ingredients' i.pk %}">Editar</a></button>
+                            <button class="dropdown-item" type="button"><a href="{% url 'delete_Ingredients' i.pk %}">Eliminar</a></button>
 
                           </div>
                         </div>

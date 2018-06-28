@@ -67,7 +67,7 @@ def list_Ingredients(request):
 
         template = 'list_Ingredients.html'
         data = {}
-        object_list = Ingredients.objects.all().order_by('-code')
+        object_list = Ingredients.objects.all().order_by('-pk')
 
         paginator = Paginator(object_list, 5)
         page = request.GET.get('page')
@@ -83,7 +83,7 @@ def list_Ingredients(request):
         return render(request, template, data)
     else:
         return redirect('index')
-        
+
 #Add Ing
 def add_Ingredients(request):
     if(request.user.is_staff == True):
@@ -105,12 +105,12 @@ def add_Ingredients(request):
         return render(request, template_name, data)
     else:
         return redirect('index')
-        
+
 #Edit Ing
-def edit_Ingredients(request,code_Ingredients):
+def edit_Ingredients(request,pk_Ingredients):
     if(request.user.is_staff == True):
 
-        ingredients = Ingredients.objects.get(code=code_Ingredients)
+        ingredients = Ingredients.objects.get(pk=pk_Ingredients)
         if request.method == 'GET':
             form = IngredientsForm(instance=ingredients)
         else:
@@ -121,19 +121,18 @@ def edit_Ingredients(request,code_Ingredients):
         return render(request,'add_Ingredients.html',{'form':form})
     else:
         return redirect('index')
-        
+
 #Delete Ingredients
-def delete_Ingredients(request,code_Ingredients):
+def delete_Ingredients(request,pk_Ingredients):
     if(request.user.is_staff == True):
 
-        ingredients = Ingredients.objects.get(code=code_Ingredients)
+        ingredients = Ingredients.objects.get(pk=pk_Ingredients)
 
         ingredients.delete()
         return redirect('../list_Ingredients')
-        return render(request,'deleteCoach.html', {'team':team})
     else:
         return redirect('index')
-        
+
 #Mass
 #Listar Mass
 def list_Mass(request):
@@ -141,7 +140,7 @@ def list_Mass(request):
 
         template = 'list_Mass.html'
         data = {}
-        object_list = Mass.objects.all().order_by('-code')
+        object_list = Mass.objects.all().order_by('-pk')
 
         paginator = Paginator(object_list, 5)
         page = request.GET.get('page')
@@ -157,7 +156,7 @@ def list_Mass(request):
         return render(request, template, data)
     else:
         return redirect('index')
-        
+
 #Add Mass
 def add_Mass(request):
     if(request.user.is_staff == True):
@@ -179,12 +178,12 @@ def add_Mass(request):
         return render(request, template_name, data)
     else:
         return redirect('index')
-        
+
 #Edit Mass
-def edit_Mass(request,code_Mass):
+def edit_Mass(request,pk_Mass):
     if(request.user.is_staff == True):
 
-        mass = Mass.objects.get(code=code_Mass)
+        mass = Mass.objects.get(pk=pk_Mass)
         if request.method == 'GET':
             form = MassForm(instance=mass)
         else:
@@ -198,17 +197,16 @@ def edit_Mass(request,code_Mass):
         template_name = "index_super_user.html"
         return render(request, template_name,data)
 #Delete Mass
-def delete_Mass(request,code_Mass):
+def delete_Mass(request,pk_Mass):
     if(request.user.is_staff == True):
 
-        mass = Mass.objects.get(code=code_Mass)
+        mass = Mass.objects.get(pk=pk_Mass)
 
         mass.delete()
         return redirect('../list_Mass')
-        return render(request,'deleteCoach.html', {'team':team})
     else:
         return redirect('index')
-        
+
 #CLIENTE
 #Listar Client
 def list_Client(request):
@@ -232,7 +230,7 @@ def list_Client(request):
         return render(request, template, data)
     else:
         return redirect('index')
-        
+
 #Add Client
 @login_required(login_url='/auth/login')
 def add_Client(request):
@@ -251,7 +249,7 @@ def add_Client(request):
                 us.user = users
                 us.save()
                 return redirect('index')
-                
+
         else:
             data['form'] = ClientForm()
 
@@ -259,7 +257,7 @@ def add_Client(request):
         return render(request, template_name, data)
     else:
         return redirect('index')
-        
+
 
 @login_required(login_url='/auth/login')
 def add_User(request):
@@ -268,7 +266,7 @@ def add_User(request):
         data = {}
         if request.method == "POST":
             data['form'] = ClientUserForm(request.POST, request.FILES)
-            
+
             if (data['form'].is_valid()):
                 # aca el formulario valido
                 User.objects.create_user(username=request.POST["username"],
@@ -282,7 +280,7 @@ def add_User(request):
 
     else:
         return redirect('index')
-        
+
 
 
 #Edit Client
@@ -301,7 +299,7 @@ def edit_Client(request,id_Client):
 
     else:
         return redirect('index')
-        
+
 
 #Delete Client
 def delete_Client(request,id_Client):
@@ -311,11 +309,9 @@ def delete_Client(request,id_Client):
 
         client.delete()
         return redirect('../list_Client')
-        return render(request,'deleteCoach.html', {'team':team})
-
     else:
         return redirect('index')
-        
+
 
 def add_dir(request):
     if(request.user.is_staff == False):
@@ -341,7 +337,7 @@ def add_dir(request):
 
     			orde = Order(total_cost = cost)
     			orde.user = clien
-    			orde.order_direccion = direc 
+    			orde.order_direccion = direc
     			orde.pizza = piz
     			orde.save()
 
@@ -380,4 +376,3 @@ def list_Order(request):
 
     else:
         return redirect('index')
-        
