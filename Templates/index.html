@@ -70,7 +70,16 @@
         <button style="text-align: center;" type="submit" class=" col-md-12 btn btn-primary">Quiero esta pizza!</button>
       </div>
   </form>
-
+  {% for i in bicicletas %}
+  <div class="col-lg-4 col-sm-12 col-md-4 col-xl-4">
+      <span>
+        <button type="button" class="btn btn-outline-primary" id={{i.name}}>+</button>
+        <img height="200px" width="200px" src="{% get_static_prefix %}{{i.image}}" alt="">
+        <i id={{i.code}} class="far fa-grin-beam" style="display: none; "></i>
+      </span>
+      {{i.nombre}}
+  </div>
+  {% endfor %}
   <script src="{% static 'js/jquery-3.2.1.min.js' %}"> </script>
 
   <script>

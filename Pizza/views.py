@@ -14,13 +14,12 @@ from django.contrib.auth.decorators import login_required
 def index(request):
 	if(request.user.is_staff == False):
 	    data = {}
-
-
 	    template_name = 'index.html'
 	    ingredient = Ingredients.objects.all()
 	    data["ing"] = ingredient
 	    lista_imag = []
 	    data["mass"] = Mass.objects.all()
+	    data["bicicletas"] = Bicicleta.objects.all()
 
 	    if request.POST:
 	    	lista_obj = []

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Mass, Ingredients, Client, Pizza, Order, Direction
+from .models import Mass, Ingredients, Client, Pizza, Order, Direction, Bicicleta
 from django.utils.safestring import mark_safe
 
 # Register your models here.
@@ -7,6 +7,9 @@ from django.utils.safestring import mark_safe
 class MassAdmin(admin.ModelAdmin):
     list_display = ('name','description','image','code','price',)
 
+@admin.register(Bicicleta)
+class BicicletaAdmin(admin.ModelAdmin):
+    list_display = ('nombre','modelo','color','aro','Estado','Tipo','Codigo','Imagen',)
 
 @admin.register(Ingredients)
 class IngredientsAdmin(admin.ModelAdmin):

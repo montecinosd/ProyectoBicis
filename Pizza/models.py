@@ -47,3 +47,14 @@ class Order(models.Model):
     order_direccion = models.ForeignKey(Direction, on_delete=models.CASCADE)
     pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
+
+class Bicicleta(models.Model):
+    nombre = models.CharField(max_length=120)
+    modelo =  models.CharField(max_length=120)
+    color =  models.CharField(max_length=120)
+    aro =  models.CharField(max_length=120)
+    Estado =  models.CharField(max_length=120)
+    Tipo =  models.CharField(max_length=120)
+    Codigo =  models.CharField(max_length=120)
+    Monto_garantia = models.PositiveIntegerField()
+    Imagen = models.ImageField(upload_to='logos')
